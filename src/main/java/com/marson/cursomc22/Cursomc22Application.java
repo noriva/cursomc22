@@ -1,5 +1,6 @@
 package com.marson.cursomc22;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.marson.cursomc22.domain.Categoria;
+import com.marson.cursomc22.domain.Cidade;
+import com.marson.cursomc22.domain.Estado;
 import com.marson.cursomc22.domain.Produto;
 import com.marson.cursomc22.repositories.CategoriaRepository;
+import com.marson.cursomc22.repositories.CidadeRepository;
+import com.marson.cursomc22.repositories.EstadoRepository;
 import com.marson.cursomc22.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -20,6 +25,13 @@ public class Cursomc22Application implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository ;
+	
+	
+	@Autowired
+	private EstadoRepository estadoRepository ;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository ;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Cursomc22Application.class, args);
@@ -45,6 +57,24 @@ public class Cursomc22Application implements CommandLineRunner {
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2,p3));
+		
+		Estado est1 = new Estado(null,"Minas Gerais");
+		Estado est2 = new Estado(null , "São Paulo");
+		
+		Cidade c1 = new Cidade(null , "Uberlandia" , est1);
+		Cidade c2 = new Cidade(null , "Moema" , est2);
+		Cidade c3 = new Cidade(null , "Campinas" , est2);
+		
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est2.getCidades().addAll(Arrays.asList(c2,c3));
+		
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2,c3));
+		
+		
+		
+		
+		
 		
 	}
 
